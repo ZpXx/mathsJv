@@ -29,7 +29,7 @@ public:
 
 //Addition of two MATRIXS
 Matrix operator+(Matrix m2){
-  Matrix m= new Matrix(size);
+  Matrix m = Matrix(size);
   for (int i=0;i<size;i++){
     for (int j=0;j<size;j++){
       m.data[i][j]=data[i][j]+m2.data[i][j];
