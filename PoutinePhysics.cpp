@@ -1,6 +1,6 @@
 #include <irrlicht/irrlicht.h>
 #include <iostream>
-#inclue "vector3.h"
+#include "vector3.h"
 #include "physicalObject.h"
 
 using namespace irr;
@@ -62,19 +62,28 @@ int main(void){
 
 		u32 start=0, delta=0;
 
+		physicalObject Objt = physicalObject(node);	// Init Obj physique
+		Objt.setSpeed(Vector3(0,25,0));							//On lui donne une vitesse initale
+
+		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
+
     while (device->run()) {                          // la boucle de rendu
-				start=device->getTimer()->getTime();
 				driver->beginScene(                          // demarre le rendu
             true,                                    // clear back-buffer
             true,                                    // clear z-buffer
             SColor(255,100,101,140));    						 // fond violet
-				node->setRotation(vector3df(0,pos,pos));
-				node->setPosition(vector3df(0,0,50));
-        smgr->drawAll ();									//Rendu scene
+				//node->setRotation(vector3df(0,pos,pos));
+				//node->setPosition(vector3df(0,0,50));
+				delta=device->getTimer()->getTime()-start;
+				if(delta>16){												//On maj la physique tout les ~1/60 de secondes
+					Objt.addForce(Vector3(0,-9.8,0)); //Gravité \o/ (obj de masse 1)
+					Objt.update(delta/1000.0);				// delta est en ms on passe en s
+					start=device->getTimer()->getTime();
+				}
+				smgr->drawAll ();									//Rendu scene
 				guienv->drawAll();                // Rendu Gui
         driver->endScene ();              // affiche le rendu
 				if(++pos>=360) pos=0;
-				delta=device->getTimer()->getTime()-start;
     }
 
     device->drop ();                                 // liberation de la memoire

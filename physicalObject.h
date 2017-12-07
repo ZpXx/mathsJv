@@ -42,11 +42,13 @@ class physicalObject {
 
     void setPos(Vector3 vect){pos = vect;}
     void setRot(Vector3 vect){eulerRot = vect;}
+    void setSpeed(Vector3 vect){spd = vect;}
     void setAccel(Vector3 vect){ accel= vect;}
 
     Vector3 getPos(){return pos;}
     Vector3 getRot(){return eulerRot;}
     Vector3 getAccel(){return pos;}
+    Vector3 getSpd(){return spd;}
 
     // Queue a force for next update force treated in adding order
     void addForce(Vector3 force){forceQ.push_back(force);}
@@ -58,7 +60,6 @@ class physicalObject {
       void treatSpd(real);
     public :
 
-    vector3df Vector3Tovector3df(Vector3 v);
     void update(real delta);
 };
 

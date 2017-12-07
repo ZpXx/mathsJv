@@ -17,9 +17,9 @@ mathsJv
 - [X] addition
 
 **TODO** Classe *Object*:
-- [ ] position
-- [ ] speed
-- [ ] acceleration
-- [ ] rotation
-- [ ] masse
-- [ ] mesh
+- [X] position
+- [X] speed
+- [X] acceleration
+- [X] rotation
+- [X] masse
+- [X] mesh

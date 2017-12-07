@@ -2,15 +2,18 @@
 #define VECTOR3
 
 #include <cmath>
+#include <irrlicht/irrlicht.h>
 
 typedef float real;
 
 class Vector3{
-	real x;
-	real y;
-	real z;
 
-	public:
+ public:
+		real x;
+		real y;
+		real z;
+
+
 		Vector3() : x(0),y(0),z(0) {}
 
 		Vector3(const real t, const real p, const real v) : x(t),y(p),z(v) {}
@@ -53,7 +56,7 @@ class Vector3{
 			this->z/=k;
 		}
 
-		void operator/(real k){
+		Vector3 operator/(real k){
 			return Vector3(x/k, y/k, z/k);
 		}
 
@@ -114,6 +117,10 @@ class Vector3{
 			return Vector3(y*vector.z-z*vector.y,
 					z*vector.x-x*vector.x,
 					x*vector.y-y*vector.x);
+		}
+
+		irr::core::vector3df toVector3df(){
+			return irr::core::vector3df(this->x, this->y, this->z);
 		}
 
 };
