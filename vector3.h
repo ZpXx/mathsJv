@@ -5,7 +5,7 @@
 
 typedef float real;
 
-class vector3{
+class Vector3{
 	real x;
 	real y;
 	real z;
@@ -41,12 +41,8 @@ class vector3{
 			}
 		}
 
-		vector3 operator*(real k){
-			vector3 res;
-			res.x=this->x*k;
-			res.y=this->y*k;
-			res.z=this->z*k;
-			return res;
+		Vector3 operator*(real k){
+			return Vector3(x*k,y*k,z*k);
 		}
 
 		void operator*=(real k){
@@ -54,6 +50,66 @@ class vector3{
 			this->y*=k;
 			this->z*=k;
 		}
+
+		void operator+=(Vector3& v){
+			this->x+=v.x;
+			this->y+=v.y;
+			this->z+=v.z;
+		}
+
+		Vector3 operator+(const Vector3& v)
+		{
+			return Vector3(x+v.x,y+x.y,z+v.z);
+		}
+
+		void addScaledVector(const Vector3& vector, real scale)
+		{
+			x += vector.x+scale;
+			y += vector.y+scale;
+			z += vector.z+scale;
+		}
+
+		Vector3 componentProduct(const Vector3 &vector) const
+		{
+			return Vector3(x*vector.x, y*vector.y,z*vector.z);
+		}
+
+		Vector3 componentProductUpdate(const Vector3 &vector)
+		{
+			x*=vector.x;
+			y*=vector.y;
+			z*=vector.z;
+		}
+
+		real scalarProduct(const Vector3 &vector) const
+		{
+			return x*vector.x+y*vector.y+z*vector.z;
+		}
+
+		real operator *(const Vector3 &vector) const
+		{
+			return x*vector.x+y*vector.y+z*vector.z;
+		}
+
+		Vector3 vectorProduct(const Vector3 &vector) const
+		{
+			return Vector3(y*vector.z-z*vector.y,
+					z*vector.x-x*vector.x,
+					x*vector.y-y*vector.x)
+		}
+
+		void operator %=(const Vector3 &vector)
+		{
+			*this = vectorProduct(vector);
+		}
+
+		Vector3 operator%(const Vector3 &vector) const
+		{
+			return Vector3(y*vector.z-z*vector.y,
+					z*vector.x-x*vector.x,
+					x*vector.y-y*vector.x)
+		}
+
 
 };
 #endif
