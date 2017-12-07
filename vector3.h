@@ -106,6 +106,5 @@ class Vector3{
 					x*vector.y-y*vector.x);
 		}
 
-
 };
 #endif
