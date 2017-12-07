@@ -1,7 +1,7 @@
 mathsJv
 
 **TODO**: Classe *Vector3*:
-[]normalize
+[X]normalize
 []invert
 []addition
 []dotprocut
