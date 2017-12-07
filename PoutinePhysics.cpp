@@ -14,7 +14,7 @@ int main(void){
 
     IrrlichtDevice *device = createDevice( // creation device
         EDT_OPENGL,                       // l'API est OpenGL
-        dimension2d<u32>(800,600),       // taille de la fenetre 800x600
+        dimension2d<u32>(320,260),       // taille de la fenetre 800x600
         32, false, true, false, 0);		// Profondeur de couleur, fullscreen, stencil buffer, vsync, event (0 sur ce device)
 
 		if(!device)																			// Crash si device pas disponible

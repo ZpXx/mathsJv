@@ -1,9 +1,13 @@
 CC=g++
-LIBS=-lIrrlicht -lGL
+LIBS=-lIrrlicht -lGL -lm
 EXE=PoutinePhysics
 
-all :
+
+all : vector3.o
 	$(CC) PoutinePhysics.cpp $(LIBS) -o $(EXE)
+
+vector3.o :
+	$(CC) -c vector3.h
 
 clean :
 	rm $(EXE)
