@@ -1,13 +1,13 @@
 mathsJv
 
 TODO: Classe Vector3:
--normalize
+-normalize<\br>
 -invert
 -addition
 -dotprocut
 -vectproduct
 -multiplication par scalaire
--magnétude
+-magnitude
 /------------------------------------/
 TODO Classe Matrix:
 -3x3 ou 4x4
