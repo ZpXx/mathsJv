@@ -10,7 +10,7 @@ mathsJv
 - [X] magnitude
 
 **TODO** Classe *Matrix*:
-- [ ] 3x3 ou 4x4
+- [X] 3x3 ou 4x4
 - [ ] invert
 - [ ] transpose
 - [ ] produit matriciel
