@@ -1,13 +1,13 @@
 mathsJv
 
 **TODO**: Classe *Vector3*:
-- [ ] normalize
-- [ ] invert
-- [ ] addition
-- [ ] dotprocut
-- [ ] vectproduct
-- [ ] multiplication par scalaire
-- [ ] magnitude
+- [X] normalize
+- [X] invert
+- [X] addition
+- [X] dotprocut
+- [X] vectproduct
+- [X] multiplication par scalaire
+- [X] magnitude
 
 **TODO** Classe *Matrix*:
 - [ ] 3x3 ou 4x4
