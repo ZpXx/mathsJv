@@ -47,6 +47,16 @@ class Vector3{
 			this->z*=k;
 		}
 
+		void operator/=(real k){
+			this->x/=k;
+			this->y/=k;
+			this->z/=k;
+		}
+
+		void operator/(real k){
+			return Vector3(x/k, y/k, z/k);
+		}
+
 		void operator+=(Vector3& v){
 			this->x+=v.x;
 			this->y+=v.y;

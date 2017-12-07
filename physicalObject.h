@@ -1,6 +1,7 @@
 #ifndef PHYSICAL_OBJECT
 #define PHYSICAL_OBJECT
 #include <irrlicht/irrlicht.h>
+#include <list>
 #include "vector3.h"
 
 using namespace irr;
@@ -18,7 +19,8 @@ class physicalObject {
     Vector3 accel;
     Vector3 spd;
     Vector3 eulerRot;
-    List<Vector3> forceQ; //List of force for next update
+    real mass;
+    std::list<Vector3> forceQ; //List of force for next update
 
     /*TODO
       Collider col;
@@ -28,18 +30,19 @@ class physicalObject {
   public :
     physicalObject(IAnimatedMeshSceneNode* mesh){
       node = mesh;
-      pos = new Vector3();
-      accel = new Vector3();
-      spd = new Vector3();
-      eulerRot = new Vector3();
-      forceQ = new List<Vector3>();
+      pos = Vector3();
+      accel = Vector3();
+      spd = Vector3();
+      eulerRot = Vector3();
+      forceQ = std::list<Vector3>();
+      mass = 1;
     }
 
     IAnimatedMeshSceneNode* getAnimatedMeshSceneNode(){ return node; }
 
-    void setPos(Vector3 vect){pos = vect}
-    void setRot(Vector3 vect){eulerPos = vect}
-    void setAccel(Vector3 vect){ = vect}
+    void setPos(Vector3 vect){pos = vect;}
+    void setRot(Vector3 vect){eulerRot = vect;}
+    void setAccel(Vector3 vect){ accel= vect;}
 
     Vector3 getPos(){return pos;}
     Vector3 getRot(){return eulerRot;}
@@ -50,15 +53,13 @@ class physicalObject {
 
     private :
       //TODO Init Collider
+      void treatForce(real); //Appli all forces in forceQ to the object (update spd)
+      Vector3 integrate(Vector3, real); //return integrated vector
+      void treatSpd(real);
     public :
 
-    void update(real delta){
-      //Treat force
-      //Treat spd
-      //Maj aff
-      node->setPosition(pos);
-      node->setRotation(eulerRot);
-    }
+    vector3df Vector3Tovector3df(Vector3 v);
+    void update(real delta);
 };
 
 #endif

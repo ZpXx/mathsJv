@@ -1,5 +1,7 @@
 #include <irrlicht/irrlicht.h>
 #include <iostream>
+#inclue "vector3.h"
+#include "physicalObject.h"
 
 using namespace irr;
 using namespace core;
@@ -58,10 +60,11 @@ int main(void){
 
 	  int pos, framecount = 0;
 
-		u32 start;
+		u32 start=0, delta=0;
 
     while (device->run()) {                          // la boucle de rendu
-			  driver->beginScene(                          // demarre le rendu
+				start=device->getTimer()->getTime();
+				driver->beginScene(                          // demarre le rendu
             true,                                    // clear back-buffer
             true,                                    // clear z-buffer
             SColor(255,100,101,140));    						 // fond violet
@@ -71,6 +74,7 @@ int main(void){
 				guienv->drawAll();                // Rendu Gui
         driver->endScene ();              // affiche le rendu
 				if(++pos>=360) pos=0;
+				delta=device->getTimer()->getTime()-start;
     }
 
     device->drop ();                                 // liberation de la memoire
