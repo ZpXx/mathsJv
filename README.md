@@ -12,9 +12,9 @@ mathsJv
 **TODO** Classe *Matrix*:
 - [X] 3x3 ou 4x4
 - [ ] invert
-- [ ] transpose
+- [X] transpose
 - [ ] produit matriciel
-- [ ] addition
+- [X] addition
 
 **TODO** Classe *Object*:
 - [ ] position
