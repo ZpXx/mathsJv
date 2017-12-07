@@ -11,9 +11,9 @@ class Vector3{
 	real z;
 
 	public:
-		vector3() : x(0),y(0),z(0) {}
+		Vector3() : x(0),y(0),z(0) {}
 
-		vector3(const real t, const real p, const real v) : x(t),y(p),z(v) {}
+		Vector3(const real t, const real p, const real v) : x(t),y(p),z(v) {}
 
 		void invert(){
 			x=-x;
@@ -55,7 +55,7 @@ class Vector3{
 
 		Vector3 operator+(const Vector3& v)
 		{
-			return Vector3(x+v.x,y+x.y,z+v.z);
+			return Vector3(x+v.x,y+v.y,z+v.z);
 		}
 
 		void addScaledVector(const Vector3& vector, real scale)
@@ -91,7 +91,7 @@ class Vector3{
 		{
 			return Vector3(y*vector.z-z*vector.y,
 					z*vector.x-x*vector.x,
-					x*vector.y-y*vector.x)
+					x*vector.y-y*vector.x);
 		}
 
 		void operator %=(const Vector3 &vector)
@@ -103,7 +103,7 @@ class Vector3{
 		{
 			return Vector3(y*vector.z-z*vector.y,
 					z*vector.x-x*vector.x,
-					x*vector.y-y*vector.x)
+					x*vector.y-y*vector.x);
 		}
 
 
