@@ -16,24 +16,20 @@ class vector3{
 		vector3(const real t, const real p, const real v) : x(t),y(p),z(v) {}
 
 		void invert(){
-
 			x=-x;
 			y=-y;
 			z=-z;
 		}
 
 		real magnitude() const{
-
 			return sqrt(x*x+y*y+z*z);
 		}
 
 		real squareMagnitude() const {
-
 			return x*x+y*y+z*z;
 		}
 
 		void normalize(){
-
 			real l=magnitude();
 			if(l>0)
 			{
