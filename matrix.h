@@ -53,7 +53,25 @@ Matrix operator+(Matrix m2){
   return m;
 }
 
-//Transopose
+//Matricial Product
+Matrix operator*(Matrix m2){
+  if (size!=m2.Get_size() || size==0 || m2.Get_size()==0){
+    fprintf(stderr, "Multiplication de deux matrices de tailles differentes ou de taille 0!\n");
+    return Matrix (0);
+  }
+  Matrix m =Matrix(size);
+  int i=0,j=0,k=0;
+  for (i=0;i<size;i++){
+    for (j=0;j<size;j++){
+      for (k=0;k<size;k++){
+        m.data[i][j]+=data[i][k]*m2.data[k][j];
+      }
+    }
+  }
+  return m;
+}
+
+//Transpose
 
 Matrix Transpose(){
   if (size==0){
