@@ -55,17 +55,22 @@ int main(void){
 		}
 
     smgr->addCameraSceneNode (0,             // ajout camera fixe
-        vector3df (0,60,-80),
-        vector3df (0,0,0));
+        vector3df (0,380,0),								//Position de la Camera
+        vector3df (0,0,0));									// Point vers laquelle elle est diriger
 
-	  int pos, framecount = 0;
+	  int pos=0, framecount = 0;
 
 		u32 start=0, delta=0;
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
-		Objt.setSpeed(Vector3(0,25,0));							//On lui donne une vitesse initale
+		Objt.setSpeed(Vector3(0,50,0));							//On lui donne une vitesse initale
 
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
+
+		Vector3 Gravity = Vector3(0,9,0);
+
+		Objt.setPos(Vector3(180,0,0));
+		Objt.setSpeed(Vector3(0,0,-50));
 
     while (device->run()) {                          // la boucle de rendu
 				driver->beginScene(                          // demarre le rendu
@@ -73,10 +78,12 @@ int main(void){
             true,                                    // clear z-buffer
             SColor(255,100,101,140));    						 // fond violet
 				//node->setRotation(vector3df(0,pos,pos));
-				//node->setPosition(vector3df(0,0,50));
+				//node->setPosition(vector3df(0,0,0));
 				delta=device->getTimer()->getTime()-start;
 				if(delta>16){												//On maj la physique tout les ~1/60 de secondes
-					Objt.addForce(Vector3(0,-9.8,0)); //Gravité \o/ (obj de masse 1)
+					std::cout << "Vector Gravity : " ;
+					Gravity.log();
+					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) ); //Gravité \o/ (obj de masse 1)
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
 				}

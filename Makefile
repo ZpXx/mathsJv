@@ -4,10 +4,10 @@ EXE=PoutinePhysics
 
 
 all : vector3.o physicalObject.o matrix.o
-	$(CC) PoutinePhysics.cpp physicalObject.o $(LIBS) -o $(EXE)
+	$(CC) PoutinePhysics.cpp physicalObject.o vector3.o $(LIBS) -o $(EXE)
 
 vector3.o :
-	$(CC) -c vector3.h
+	$(CC) -c vector3.cpp
 
 matrix.o :
 	$(CC) -c matrix.h
@@ -18,3 +18,4 @@ physicalObject.o :
 clean :
 	rm $(EXE)
 	rm *.o
+	rm *.gch
