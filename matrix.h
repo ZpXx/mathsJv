@@ -2,6 +2,8 @@
 #define MATRIX
 
 #include <cmath>
+#include <iostream>
+#include "vector3.h"
 
 class Matrix{
     int size;
@@ -66,6 +68,33 @@ Matrix operator*(Matrix m2){
       for (k=0;k<size;k++){
         m.data[i][j]+=data[i][k]*m2.data[k][j];
       }
+    }
+  }
+  return m;
+}
+
+//Matrice X Vector
+Vector3 operator*(Vector3 v){
+  if (size!=3){
+    fprintf(stderr, "Multiplication de vecteur par une matrice de taille !=3 ! \n");
+    return Vector3();
+  }
+  float x,y,z;
+  x=v.x*data[0][0]+v.y*data[0][1]+v.z*data[0][2];
+  y=v.x*data[1][0]+v.y*data[1][1]+v.z*data[1][2];
+  z=v.x*data[2][0]+v.y*data[2][1]+v.z*data[2][2];
+  return Vector3(x,y,z);
+}
+
+Matrix operator*(float f){
+  if (size==0){
+    fprintf(stderr, "Tentaive de Multiplication d'une matrice nulle par un scalaire!\n");
+    return Matrix(0);
+  }
+  Matrix m = Matrix(size);
+  for (int i=0;i<size;i++){
+    for (int j=0;j<size;j++){
+      m.data[i][j]=data[i][j]*f;
     }
   }
   return m;
