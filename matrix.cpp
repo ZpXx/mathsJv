@@ -153,3 +153,54 @@ float Matrix::Det(){
     return (min_det[1]+min_det[3]-min_det[0]-min_det[2]);
   }
 }
+
+
+Matrix Matrix::Minor(int x, int y){
+  if (size<2){
+    fprintf(stderr, "le mineur demande serait de taille >=0!\n");
+    return Matrix (0);
+  }else{
+    Matrix minor = Matrix (size-1);
+    //printf ("minor size %d\n", minor.Get_size());
+    int i=0,j=0,m=0,n=0;
+    for(i=0;i<size;i++){
+      for (j=0;j<size;j++){
+        if (i!=x && j!=y){
+          minor.data[m][n]=data[i][j];
+          //printf("minor: %d %d/ %d %d : %f\n",x,y,m,n,minor.data[m][n] );
+          n++;
+          if (n>size-2){
+            m++;
+            n=0;
+          }
+        }
+      }
+    }
+    return minor;
+  }
+}
+
+
+Matrix Matrix::Invert(){
+  if (size==0){
+    fprintf(stderr, "Tentative d'iversion de matrice de taille 0!\n");
+    return Matrix(0);
+  }else{
+    Matrix comat= Matrix (size);
+    int i=0,j=0;
+    for (i=0;i<size;i++){
+      for (j=0;j<size;j++){
+        Matrix tmp=Minor(i,j);
+        comat.data[i][j]=(tmp.Det()*pow((-1),(i+j+1)));
+        //printf("comat %d %d : %f \n",i,j,comat.data[i][j] );
+        tmp.Destroy();
+      }
+    }
+    float d=(1.0/Det());
+    Matrix res=comat*d;
+    Matrix res2=res.Transpose();
+    comat.Destroy();
+    res.Destroy();
+    return res2;
+  }
+}

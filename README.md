@@ -1,6 +1,6 @@
 mathsJv
 
-**TODO**: Classe *Vector3*:
+~~**TODO**: Classe *Vector3*:~~
 - [X] normalize
 - [X] invert
 - [X] addition
@@ -8,14 +8,16 @@ mathsJv
 - [X] vectproduct
 - [X] multiplication par scalaire
 - [X] magnitude
-- [ ] rotate_towards
+- [X] rotate_towards
 
-**TODO** Classe *Matrix*:
+~~**TODO** Class *Matrix*:~~
 - [X] 3x3 ou 4x4
-- [ ] invert
+- [X] invert
 - [X] transpose
 - [X] produit matriciel
 - [X] addition
+- [X] determinant
+- [X] minor
 
 ~~**TODO** Classe *Object*:~~
 - [X] position

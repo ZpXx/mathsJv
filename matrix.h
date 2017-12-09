@@ -36,6 +36,8 @@ Matrix operator*(Matrix m2);
 Vector3 operator*(Vector3 v);
 Matrix operator*(float f);
 Matrix Transpose();
+Matrix Invert();
+Matrix Minor(int x, int y);
 float Det();
 int Get_size(){
   return size;
