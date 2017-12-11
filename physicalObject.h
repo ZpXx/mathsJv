@@ -3,6 +3,7 @@
 #include <irrlicht/irrlicht.h>
 #include <list>
 #include "vector3.h"
+#include "collider.h"
 
 using namespace irr;
 using namespace core;

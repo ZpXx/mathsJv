@@ -3,8 +3,8 @@
 
 #include <cmath>
 #include <irrlicht/irrlicht.h>
-#include <Vector3.h>
-#include <Matrix.h>
+#include "vector3.h"
+#include "matrix.h"
 #include <iostream>
 
 typedef float real;
@@ -49,7 +49,7 @@ class Quaternion{
 		p.w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
 		p.v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
 		p.v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		p.x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w; 
+		p.x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
 		return p;
 		}
 
@@ -57,13 +57,13 @@ class Quaternion{
 		this->w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
 		this->v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
 		this->v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		this->x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w; 
+		this->x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
 
 		}
 
 
 
-		
+
 
     void log(){ std::cout<<this->w<<"|"<<this->v.x<<"|"<<this->v.y<<"|"<<this->v.z<<std::endl; }
 
