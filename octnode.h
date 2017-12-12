@@ -1,12 +1,16 @@
 #ifndef OCTNODE
 #define OCTNODE
+#include <iostream>
+#include <cmath>
+#include <irrlicht/irrlicht.h>
+
 // TAKOYAKI ! TAKOYAKI! OSAKA NO TAKOYAKI WO TABETAI!!
 class Octnode{
 
 private:
-  float[2]bounds_x;
-  float[2]bounds_y;
-  float[2]bounds_z;
+  float bounds_x[2];
+  float bounds_y[2];
+  float bounds_z[2];
 
   Octnode** children;
   Octnode*  parent; // OCTODAD
@@ -28,7 +32,7 @@ public:
                   * I WON'T SHOW YOU ANY MERCY,
                   * SHOULD YOU CHOOSE TO FACE ME ON THE BATTLEFIELD!! */
   }
-  Octnode(Quadnode *p, int n){
+  Octnode(Octnode *p, int n){
     parent=p;
     if (n%2){
       bounds_x[0]=p->bounds_x[0];
@@ -55,12 +59,12 @@ public:
   }
 
 
-  float GetMiX(){return bounds_x[0]};
-  float GetMaX(){return bounds_x[1]};
-  float GetMiY(){return bounds_y[0]};
-  float GetMaY(){return bounds_y[1]};
-  float GetMiZ(){return bounds_z[0]};
-  float GetMaZ(){return bounds_z[1]};
+  float GetMiX(){return bounds_x[0];}
+  float GetMaX(){return bounds_x[1];}
+  float GetMiY(){return bounds_y[0];}
+  float GetMaY(){return bounds_y[1];}
+  float GetMiZ(){return bounds_z[0];}
+  float GetMaZ(){return bounds_z[1];}
   void Expand();
   void Destroy();
 };
