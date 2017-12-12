@@ -1,6 +1,9 @@
 #include "collider.h"
 #include "physicalObject.h"
 #include <cmath>
+#include <iostream>
+#define COLLIDER_DEBUG
+
 
 Collider::Collider(double r, physicalObject* p){
   _typ = sphere;
@@ -38,6 +41,10 @@ void Collider::appliColide (Collider col, double coef){
 
 bool Collider::isCollide(Collider col){
   bool res=false;
+
+  #ifdef COLLIDER_DEBUG
+  std::cout << "COLLSOLV" << std::endl;
+  #endif
 
   if(_typ== box){
     if(col.getColTyp()== box){
@@ -110,9 +117,16 @@ bool Collider::solveBS(Collider box, Collider sph){
 bool Collider::solveSS(Collider c1, Collider c2){
   bool res=false;
 
+  #ifdef COLLIDER_DEBUG
+  std::cout <<"COLLSPH ENTER" <<std::endl;
+  #endif
 
   double dist=(c1.getPos()-c2.getPos()).magnitude(); //Distance des centres
   //Si distance plus
+
+  #ifdef COLLIDER_DEBUG
+  std::cout << "COLLSPH :" << dist << ":" << c1.getSDim()+c2.getSDim() <<std::endl;
+  #endif
   if(dist < c1.getSDim()+c2.getSDim()) res = true;
 
   return res;

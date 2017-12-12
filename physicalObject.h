@@ -29,6 +29,8 @@ class physicalObject {
     */
 
   public :
+
+
     physicalObject(IAnimatedMeshSceneNode* mesh){
       node = mesh;
       pos = Vector3();
@@ -51,6 +53,7 @@ class physicalObject {
     Vector3 getAccel(){return pos;}
     Vector3 getSpd(){return spd;}
     double getMass(){return mass;}
+    Collider* getCol(){return _col;}
 
     // Queue a force for next update force treated in adding order
     void addForce(Vector3 force){forceQ.push_back(force);}

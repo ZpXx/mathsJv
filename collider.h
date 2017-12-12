@@ -21,10 +21,11 @@ class Collider{
 
   public:
     Collider(double, physicalObject*);
-    Collider(Vector3, physicalObject*);
     bool isCollide(Collider);
     ColType getColTyp(){return _typ;}
     Vector3 getPos(){return _center;}
+    void setPos(Vector3 p){_center = p;}
+    Collider(Vector3, physicalObject*);
     double getSDim(){return _rDim;}
     Vector3 getBDim(){return _HalfDim;}
     void appliColide (Collider, double);

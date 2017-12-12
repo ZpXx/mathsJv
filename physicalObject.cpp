@@ -10,8 +10,10 @@ void physicalObject::treatForce(real delta){
   }
   resultante/=mass;
   resultante = integrate(resultante, delta);
-  std::cout << "RESULTANTE" ;
-  resultante.log();
+  #ifdef FORCE_DEBUG
+    std::cout << "RESULTANTE" ;
+    resultante.log();
+  #endif
   this->spd+=resultante;
 }
 
@@ -41,6 +43,7 @@ void physicalObject::update(real delta){
   //Update Spd->Pos
   treatSpd(delta);
 
+  _col->setPos(pos);
   node->setPosition(pos.toVector3df());
   node->setRotation(eulerRot.toVector3df());
 }

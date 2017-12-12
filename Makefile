@@ -3,7 +3,7 @@ LIBS=-lIrrlicht -lGL -lm
 EXE=PoutinePhysics
 
 
-all : vector3.o physicalObject.o matrix.o collider.o
+all : vector3.o physicalObject.o collider.o
 	$(CC) PoutinePhysics.cpp physicalObject.o vector3.o collider.o $(LIBS) -o $(EXE)
 
 vector3.o :

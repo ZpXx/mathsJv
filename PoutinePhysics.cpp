@@ -40,6 +40,13 @@ int main(void){
 			return 1;
 		}
 
+		IAnimatedMesh* mesh2 = smgr->getMesh("skull.stl"); // On charge le mesh
+		if(!mesh2){
+			device->drop();  //On crash tout si le mesh n'est pas chargé
+			return 1;
+		}
+
+
 		IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh); // Ajout du mesh à la scene
 		node->addShadowVolumeSceneNode();
 
@@ -47,6 +54,15 @@ int main(void){
 			node->setMaterialFlag(EMF_LIGHTING, true); //On déactive la lumiére dynamic
 			node->setMaterialFlag(EMF_GOURAUD_SHADING, true);
 		}
+
+			IAnimatedMeshSceneNode* node2 = smgr->addAnimatedMeshSceneNode(mesh2); // Ajout du mesh à la scene
+		node2->addShadowVolumeSceneNode();
+
+		if(node2){
+			node2->setMaterialFlag(EMF_LIGHTING, true); //On déactive la lumiére dynamic
+			node2->setMaterialFlag(EMF_GOURAUD_SHADING, true);
+		}
+
 
 		ILightSceneNode *light = smgr->addLightSceneNode();
 
@@ -63,16 +79,25 @@ int main(void){
 		u32 start=0, delta=0;
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
-		Objt.setSpeed(Vector3(0,50,0));							//On lui donne une vitesse initale
+		Objt.setSpeed(Vector3(0,0,80));							//On lui donne une vitesse initale
+		Objt.setPos(Vector3(0,0,0));
+
+		physicalObject Objt2 = physicalObject(node2);
+		Objt2.setSpeed(Vector3(0,0,0));
+		Objt2.setPos(Vector3(0,0,100));
 
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
 
 		Vector3 Gravity = Vector3(0,9,0);
 
-		Objt.setPos(Vector3(180,0,0));
-		Objt.setSpeed(Vector3(0,0,-50));
+		//Objt.setPos(Vector3(180,0,0));
+		//Objt.setSpeed(Vector3(0,0,-50));
 
-		Objt.addCollider(10.0);
+
+
+		Objt.addCollider(20.0);
+		Objt2.addCollider(20.0);
+
 
     while (device->run()) {                          // la boucle de rendu
 				driver->beginScene(                          // demarre le rendu
@@ -83,9 +108,15 @@ int main(void){
 				//node->setPosition(vector3df(0,0,0));
 				delta=device->getTimer()->getTime()-start;
 				if(delta>16){												//On maj la physique tout les ~1/60 de secondes
-					std::cout << "Vector Gravity : " ;
+					/*std::cout << "Vector Gravity : " ;
 					Gravity.log();
 					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) ); //Gravité \o/ (obj de masse 1)
+					*/
+					if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
+						std::cout << "Collide !" << std::endl;
+						Objt.getCol()->appliColide(*(Objt2.getCol()),0.0);
+					}
+					Objt2.update(delta/1000.0);
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
 				}
