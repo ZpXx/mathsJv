@@ -53,13 +53,16 @@ public:
     }
 
   }
-  float node::GetMiX(){return bounds_x[0]};
-  float node::GetMaX(){return bounds_x[1]};
-  float node::GetMiY(){return bounds_y[0]};
-  float node::GetMaY(){return bounds_y[1]};
-  float node::GetMiZ(){return bounds_z[0]};
-  float node::GetMaZ(){return bounds_z[1]};
 
+
+  float GetMiX(){return bounds_x[0]};
+  float GetMaX(){return bounds_x[1]};
+  float GetMiY(){return bounds_y[0]};
+  float GetMaY(){return bounds_y[1]};
+  float GetMiZ(){return bounds_z[0]};
+  float GetMaZ(){return bounds_z[1]};
+  void Expand();
+  void Destroy();
 };
 
 #endif
