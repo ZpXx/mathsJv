@@ -53,6 +53,7 @@ class physicalObject {
     Vector3 getAccel(){return pos;}
     Vector3 getSpd(){return spd;}
     double getMass(){return mass;}
+    void setMass(double m){mass = m;}
     Collider* getCol(){return _col;}
 
     // Queue a force for next update force treated in adding order

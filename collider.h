@@ -34,6 +34,7 @@ class Collider{
     bool solveBB(Collider, Collider);
     bool solveBS(Collider, Collider);
     bool solveSS(Collider, Collider);
+    bool oneAxisCollide(double m1, double M1, double m3, double M2);
 };
 
 

@@ -21,21 +21,32 @@ Collider::Collider(Vector3 v, physicalObject* p){
 
 void Collider::appliColide (Collider col, double coef){
   Vector3 tmp;
+  Vector3 _parentSpd = _parent->getSpd();
+
   //V1
   tmp = col.getParent()->getSpd()-_parent->getSpd();
-  tmp*=col.getParent()->getMass()*coef;
+  tmp*= col.getParent()->getMass()*coef;
   tmp+=_parent->getSpd()*_parent->getMass();
   tmp+=col.getParent()->getSpd()*col.getParent()->getMass();
   tmp/=col.getParent()->getMass()+_parent->getMass();
   _parent->setSpeed(tmp);
 
   //V2
-  tmp = _parent->getSpd() - col.getParent()->getSpd();
-  tmp*=col.getParent()->getMass()*coef;
-  tmp+=_parent->getSpd()*_parent->getMass();
+  tmp = _parentSpd - col.getParent()->getSpd();
+  tmp*= _parent->getMass()*coef;
+  tmp+=_parentSpd*_parent->getMass();
   tmp+=col.getParent()->getSpd()*col.getParent()->getMass();
   tmp/=col.getParent()->getMass()+_parent->getMass();
   col.getParent()->setSpeed(tmp);
+
+  #ifdef COLLIDER_DEBUG
+    std::cout << "VCOLLIDE :\nV2 : ";
+    col.getParent()->getSpd().log();
+    std::cout << std::endl;
+    std::cout << "V1 : " ;
+    _parent->getSpd().log();
+    std::cout << std::endl;
+  #endif
 
 }
 
@@ -67,30 +78,53 @@ bool Collider::isCollide(Collider col){
 }
 
 bool Collider::solveBB(Collider c1, Collider c2){
-  bool res = true;
+  bool res = false;
+
+  #ifdef COLLIDER_DEBUG
+    std::cout <<"COLLBOX ENTER" <<std::endl;
+  #endif
 
   Vector3 c1Dim=c1.getBDim();
   Vector3 c2Dim=c2.getBDim();
   Vector3 c1Center=c1.getPos();
   Vector3 c2Center=c2.getPos();
 
-  if(c1Center.x+c1Dim.x < c2Center.x-c2Dim.x || c1Center.x-c1Dim.x > c2Center.x+c2Dim.x ){ //Pas de col en X
-    if(c1Center.y+c1Dim.y < c2Center.y-c2Dim.y || c1Center.y-c1Dim.y > c2Center.y+c2Dim.y){ //Pas de col en Y
-      if(c1Center.z+c1Dim.z < c2Center.z-c2Dim.z || c1Center.z-c1Dim.z > c2Center.z+c2Dim.z){ //Pas de col en Z
-        res = false; //Donc pas de col
-      }
-    }
-  }
+  bool colX = oneAxisCollide(c1Center.x-c1Dim.x, c1Center.x+c1Dim.x, c2Center.x-c2Dim.x, c2Center.x+c2Dim.x  ) ;
+  bool colY = oneAxisCollide(c1Center.y-c1Dim.y, c1Center.y+c1Dim.y, c2Center.y-c2Dim.y, c2Center.y+c2Dim.y  ) ;
+  bool colZ = oneAxisCollide(c1Center.z-c1Dim.z, c1Center.z+c1Dim.z, c2Center.z-c2Dim.z, c2Center.z+c2Dim.z  ) ;
+
+  #ifdef COLLIDER_DEBUG
+    std::cout << "COLLBOX AXIS BOOL" << colX << ":" << colY << ":" << colZ << std::endl;
+  #endif
+
+  if(colX && colY && colZ) res = true;
 
   return res;
 
 }
 
+bool Collider::oneAxisCollide(double m1, double M1, double m2, double M2){
+  bool res = false;
+  #ifdef COLLIDER_DEBUG
+    std::cout << "## Axis Interval " << m1 << ":" << M1 << ":" << m2 << ":" << M2 << std::endl;
+  #endif
+  if(M1>=m2 && M1<=M2) res = true;
+  else if(m1<=M2 && m1>=m2) res = true;
+  else res = false;
+
+  return res;
+}
+
 bool Collider::solveBS(Collider box, Collider sph){
 
-  bool res=true;
+  bool res=false;
 
   Vector3 dist=box.getPos()-sph.getPos();
+
+  #ifdef COLLIDER_DEBUG
+  std::cout <<"COLLBS ENTER" <<std::endl;
+  #endif
+
 
   dist.x = abs(dist.x);
   dist.y = abs(dist.y);
@@ -103,13 +137,15 @@ bool Collider::solveBS(Collider box, Collider sph){
 
   Vector3 boxDim = box.getBDim();
 
-  if(dist.x > boxDim.x+sphR ){
-    if(dist.y > boxDim.y+sphR ){
-      if(dist.z > boxDim.z+sphR ){
-        res=false;
-      }
-    }
-  }
+  bool colX = oneAxisCollide(boxCenter.x-boxDim.x, boxCenter.x+boxDim.x, sphCenter.x-sphR,sphCenter.x+sphR);
+  bool colY = oneAxisCollide(boxCenter.y-boxDim.y, boxCenter.y+boxDim.y, sphCenter.y-sphR,sphCenter.y+sphR);
+  bool colZ = oneAxisCollide(boxCenter.z-boxDim.z, boxCenter.z+boxDim.z, sphCenter.z-sphR,sphCenter.z+sphR);
+
+  #ifdef COLLIDER_DEBUG
+    std::cout << "COLLBS AXIS BOOL" << colX << ":" << colY << ":" << colZ << std::endl;
+  #endif
+
+  if(colX && colY && colZ) res=true;
 
   return res;
 }

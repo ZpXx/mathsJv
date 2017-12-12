@@ -79,12 +79,13 @@ int main(void){
 		u32 start=0, delta=0;
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
-		Objt.setSpeed(Vector3(0,0,80));							//On lui donne une vitesse initale
+		Objt.setSpeed(Vector3(0,0,20));							//On lui donne une vitesse initale
 		Objt.setPos(Vector3(0,0,0));
 
 		physicalObject Objt2 = physicalObject(node2);
 		Objt2.setSpeed(Vector3(0,0,0));
 		Objt2.setPos(Vector3(0,0,100));
+		Objt2.setMass(8000);
 
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
 
@@ -95,8 +96,8 @@ int main(void){
 
 
 
-		Objt.addCollider(20.0);
-		Objt2.addCollider(20.0);
+		Objt.addCollider(Vector3(20,20,20));
+		Objt2.addCollider(20);
 
 
     while (device->run()) {                          // la boucle de rendu
@@ -114,8 +115,9 @@ int main(void){
 					*/
 					if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
 						std::cout << "Collide !" << std::endl;
-						Objt.getCol()->appliColide(*(Objt2.getCol()),0.0);
+						Objt.getCol()->appliColide(*(Objt2.getCol()),1.0);
 					}
+					Objt.addForce(Vector3(0,0,9.8));
 					Objt2.update(delta/1000.0);
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
