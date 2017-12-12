@@ -203,4 +203,14 @@ Matrix Matrix::Invert(){
     res.Destroy();
     return res2;
   }
+
+  Quaternion Matrix::toQuaternion()
+  {
+    Quaternion p = Quaternion();
+    p.w=sqrt(1+this->data[0][0]+this->data[1][1]+this->data[2][2])/2;
+    p.v.x=(this->data[2][1]-this->data[1][2])/(4*p.w);
+    p.v.y=(this->data[0][2]-this->data[2][0])/(4*p.w);
+    p.v.z=(this->data[1][0]-this->data[0][1])/(4*p.w);
+    return p;
+  }
 }

@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include "vector3.h"
+#include "quaternion.h"
 
 class Matrix{
     int size;
@@ -38,6 +39,8 @@ Matrix operator*(float f);
 Matrix Transpose();
 Matrix Invert();
 Matrix Minor(int x, int y);
+Quaternion toQuaternion();
+
 float Det();
 int Get_size(){
   return size;
