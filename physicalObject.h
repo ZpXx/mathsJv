@@ -22,9 +22,9 @@ class physicalObject {
     Vector3 eulerRot;
     real mass;
     std::list<Vector3> forceQ; //List of force for next update
+    Collider* _col;
 
     /*TODO
-      Collider col;
       Quaternion;
     */
 
@@ -50,9 +50,12 @@ class physicalObject {
     Vector3 getRot(){return eulerRot;}
     Vector3 getAccel(){return pos;}
     Vector3 getSpd(){return spd;}
+    double getMass(){return mass;}
 
     // Queue a force for next update force treated in adding order
     void addForce(Vector3 force){forceQ.push_back(force);}
+    void addCollider(Vector3);
+    void addCollider(double);
 
     private :
       //TODO Init Collider

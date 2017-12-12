@@ -41,11 +41,11 @@ class Vector3{
 
 		Vector3 operator/(real k){ return Vector3(x/k, y/k, z/k); }
 
-		void operator+=(Vector3& v){ this->x+=v.x; this->y+=v.y; this->z+=v.z; }
+		void operator+=(Vector3 v){ this->x+=v.x; this->y+=v.y; this->z+=v.z; }
 
-		Vector3 operator+(const Vector3& v){ return Vector3(x+v.x,y+v.y,z+v.z);}
+		Vector3 operator+(const Vector3 v){ return Vector3(x+v.x,y+v.y,z+v.z);}
 
-		void addScaledVector(const Vector3& vector, real scale){
+		void addScaledVector(const Vector3 vector, real scale){
 			x += vector.x+scale;
 			y += vector.y+scale;
 			z += vector.z+scale;

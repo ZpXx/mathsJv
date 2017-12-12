@@ -72,6 +72,8 @@ int main(void){
 		Objt.setPos(Vector3(180,0,0));
 		Objt.setSpeed(Vector3(0,0,-50));
 
+		Objt.addCollider(10.0);
+
     while (device->run()) {                          // la boucle de rendu
 				driver->beginScene(                          // demarre le rendu
             true,                                    // clear back-buffer

@@ -15,6 +15,14 @@ void physicalObject::treatForce(real delta){
   this->spd+=resultante;
 }
 
+void physicalObject::addCollider(Vector3 v){
+  _col = new Collider(v, this);
+}
+
+void physicalObject::addCollider(double r){
+  _col = new Collider(r, this);
+}
+
 void physicalObject::treatSpd(real delta){
   Vector3 v = this->spd;
   v=integrate(v, delta);
