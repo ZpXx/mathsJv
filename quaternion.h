@@ -22,19 +22,21 @@ class Quaternion{
 
 		Quaternion(const t, Vector3 p) :w(t),v.x(p.x),v.y(p.y), v.z(p.z) {}
 
-		Matrix toMatrix(){}
+		Matrix toMatrix(){};
 
-		real magnitude(){}
+		real magnitude(){};
 
-		Quaternion operator*(Quaternion q){}
+		Quaternion operator*(Quaternion q){};
 
-		void operator*=(Quaternion q){}
+		void operator*=(Quaternion q){};
 
-		real scalarProduct(Quaternion q){}
+		real scalarProduct(Quaternion q){};
 
-		Quaternion conjugue(){}
+		Quaternion conjugue(){};
 
-		real norm(){}
+		real norm(){};
+
+		Vector3 toEulerAngle();
 
     	void log(){ std::cout<<this->w<<"|"<<this->v.x<<"|"<<this->v.y<<"|"<<this->v.z<<std::endl; }
 

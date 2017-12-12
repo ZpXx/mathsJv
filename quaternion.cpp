@@ -1,6 +1,7 @@
 #include "quaternion.h"
 
 
+
 Matrix Quaternion::toMatrix()
 		{
 			Matrix M = Matrix(3);
@@ -60,3 +61,24 @@ void Quaternion::operator*=(Quaternion q){
 			return sqrt(this->w*this->w+sqrt(this->v.x*this->v.x+this->v.y*this->v.y+this->v.z*this->v.z));
 		}
 
+
+		Vector3 toEulerAngle()
+		{
+			Vector3 vect = Vector3();
+			// roll (x-axis rotation)
+			double sinr = +2.0 * (this->.w() * this->v.x() + this->v.y() * this->v.z());
+			double cosr = +1.0 - 2.0 * (this->v.x() * this->v.x() + this->v.y() * this->v.y());
+			vect.x = atan2(sinr, cosr);
+
+			// pitch (y-axis rotation)
+			double sinp = +2.0 * (this->w() * this->v.y() - this->v.z() * this->v.x());
+			if (fabs(sinp) >= 1)
+				vect.y = copysign(M_PI / 2, sinp); // use 90 degrees if out of range
+			else
+				vect.y = asin(sinp);
+
+			// yaw (z-axis rotation)
+			double siny = +2.0 * (this->w() * this->v.z() + this->v.x() * this->v.y());
+			double cosy = +1.0 - 2.0 * (this->v.y() * this->v.y() + this->v.z() * this->v.z());  
+			vect.z = atan2(siny, cosy);
+		}
