@@ -55,7 +55,6 @@ public:
           bounds_z[0]=((p->bounds_z[0]+p->bounds_z[1])/2);
           bounds_z[1]=p->bounds_z[1];
     }
-
   }
 
 
@@ -67,6 +66,7 @@ public:
   float GetMaZ(){return bounds_z[1];}
   void Expand();
   void Destroy();
+  Octnode* GetChildren(int n){return children[n];}
 };
 
 #endif
