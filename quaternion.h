@@ -22,50 +22,23 @@ class Quaternion{
 
 		Quaternion(const t, Vector3 p) :w(t),v.x(p.x),v.y(p.y), v.z(p.z) {}
 
-		Matrix toMatrix()
-		{
-			Matrix M = Matrix(3);
-			M.data[0][0]=1-2*(this->v.y*this->v.y)-2*(this->v.z*this->v.z);
-			M.data[0][1]=2*(this->v.x*this->v.y)-2*(this->w*this->v.z);
-			M.data[0][2]=2*(this->v.x*this->v.z)+*(this->v.y*this->w);
+		Matrix toMatrix(){};
 
-			M.data[1][0]=2*(this->v.x*this->v.y)+2*(this->w*this->v.z);
-			M.data[1][1]=1-2*(this->v.x*this->v.x)-2*(this->v.z*this->v.z);
-			M.data[1][2]=2*(this->v.z*this->v.y)-2*(this->w*this->v.x);
+		real magnitude(){};
 
-			M.data[2][0]=2*(this->v.x*this->v.z)-2*(this->w*this->v.y);
-			M.data[2][1]=2*(this->v.z*this->v.y)-2*(this->w*this->v.x);
-			M.data[2][2]=1-2*(this->v.y*this->v.y)-2*(this->v.x*this->v.x);
-			return M;
-		}
+		Quaternion operator*(Quaternion q){};
 
-		real magnitude()
-		{
-			return sqrt(this->w*this->w + this->v.x*this->v.x + this->v.y*this->v.y + this->v.z*this->v.z);
-		}
+		void operator*=(Quaternion q){};
 
-		Quaternion operator*(Quaternion q){
-			Quaternion p = Quaternion();
-		p.w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
-		p.v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
-		p.v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		p.x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
-		return p;
-		}
+		real scalarProduct(Quaternion q){};
 
-		void operator*=(Quaternion q){
-		this->w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
-		this->v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
-		this->v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		this->x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
+		Quaternion conjugue(){};
 
-		}
+		real norm(){};
 
+		Vector3 toEulerAngle();
 
-
-
-
-    void log(){ std::cout<<this->w<<"|"<<this->v.x<<"|"<<this->v.y<<"|"<<this->v.z<<std::endl; }
+    	void log(){ std::cout<<this->w<<"|"<<this->v.x<<"|"<<this->v.y<<"|"<<this->v.z<<std::endl; }
 
 };
 #endif
