@@ -3,7 +3,8 @@ LIBS=-lIrrlicht -lGL -lm
 EXE=PoutinePhysics
 
 
-all : clean base.o bouncingball gravity orbit control
+
+all : clean base.o bouncingball gravity orbit control test
 
 base.o : vector3.o physicalObject.o collider.o matrix.o quaternion.o input.o
 	ld -r vector3.o collider.o matrix.o quaternion.o  physicalObject.o input.o -o base.o
@@ -34,6 +35,10 @@ gravity : base.o PoutineGravity.cpp
 
 orbit : base.o PoutineOrbit.cpp
 	$(CC) PoutineOrbit.cpp base.o $(LIBS) -o PoutineOrbit
+
+
+test : base.o PoutinePhysics.cpp
+	$(CC) PoutinePhysics.cpp base.o $(LIBS) -o PoutineTest
 
 control : base.o PoutineControl.cpp
 	$(CC) PoutineControl.cpp base.o $(LIBS) -o PoutineControl
