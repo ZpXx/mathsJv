@@ -34,18 +34,26 @@ int main(void){
 		guienv->addStaticText(L"Cette simulation vous est offert par les Poutines au Boivin", rect<s32>(10,10,260,22), true);
 		// Text, rectangle de placement
 
-		IAnimatedMesh* mesh = smgr->getMesh("skull.stl"); // On charge le mesh
+		IAnimatedMesh* mesh = smgr->getMesh("ball.stl"); // On charge le mesh
 		if(!mesh){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
 		}
 
-		IAnimatedMesh* mesh2 = smgr->getMesh("skull.stl"); // On charge le mesh
+		IAnimatedMesh* mesh2 = smgr->getMesh("ball2.stl"); // On charge le mesh
 		if(!mesh2){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
 		}
 
+		IAnimatedMesh* mesh3 = smgr->getMesh("ball3.stl"); // On charge le mesh
+		if(!mesh3){
+			device->drop();  //On crash tout si le mesh n'est pas chargé
+			return 1;
+		}
+		smgr->getMeshManipulator()->scale(mesh3,vector3df(1,1,1));
+		smgr->getMeshManipulator()->scale(mesh,vector3df(0.75,0.75,0.75));
+		smgr->getMeshManipulator()->scale(mesh2,vector3df(0.25,0.25,0.25));
 
 		IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh); // Ajout du mesh à la scene
 		node->addShadowVolumeSceneNode();
@@ -62,6 +70,14 @@ int main(void){
 			node2->setMaterialFlag(EMF_LIGHTING, true); //On déactive la lumiére dynamic
 			node2->setMaterialFlag(EMF_GOURAUD_SHADING, true);
 		}
+
+		IAnimatedMeshSceneNode* node3 = smgr->addAnimatedMeshSceneNode(mesh3); // Ajout du mesh à la scene
+	node3->addShadowVolumeSceneNode();
+
+	if(node3){
+		node3->setMaterialFlag(EMF_LIGHTING, true); //On déactive la lumiére dynamic
+		node3->setMaterialFlag(EMF_GOURAUD_SHADING, true);
+	}
 
 
 		ILightSceneNode *light = smgr->addLightSceneNode();
@@ -82,22 +98,25 @@ int main(void){
 		//Objt.setSpeed(Vector3(0,0,20));							//On lui donne une vitesse initale
 		//Objt.setPos(Vector3(0,0,0));
 
-		//physicalObject Objt2 = physicalObject(node2);
-		//Objt2.setSpeed(Vector3(0,0,0));
-		//Objt2.setPos(Vector3(0,0,100));
+		physicalObject Objt2 = physicalObject(node2);
+
 		//Objt2.setMass(8000);
 
+	  //physicalObject Objt3 = physicalObject(node3);
+		//Objt3.setSpeed(Vector3(0,0,0));
+		//Objt3.setPos(Vector3(0,0,-100));
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
 
 		Vector3 Gravity = Vector3(0,9,0);
 
 		Objt.setPos(Vector3(180,0,0));
 		Objt.setSpeed(Vector3(0,0,-50));
+		Objt2.setSpeed(Vector3(0,0,25));
+		Objt2.setPos(Vector3(240,0,0));
+		Objt2.setMass(100);
 
-
-
-		Objt.addCollider(Vector3(20,20,20));
-		//Objt2.addCollider(20);
+		Objt.addCollider(30);
+		Objt2.addCollider(10);
 
 
     while (device->run()) {                          // la boucle de rendu
@@ -113,13 +132,14 @@ int main(void){
 					Gravity.log();
 					//Objt2.addForce( Gravity2*Objt2.getMass() ); //Gravité \o/ (obj de masse 1)
 					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) );
-					Objt.getSpd().log();
+					Objt2.addForce( Gravity.rotate_toward( Objt2.getPos(), Objt.getPos() )*1500);//IT JUST WORKS
+					Objt2.getSpd().log();
 					/*if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
 						std::cout << "Collide !" << std::endl;
 						Objt.getCol()->appliColide(*(Objt2.getCol()),1.0);
 					}*/
 					//Objt.addForce(Vector3(0,0,9.8));
-					//Objt2.update(delta/1000.0);
+					Objt2.update(delta/1000.0);
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
 				}
