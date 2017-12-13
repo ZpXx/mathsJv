@@ -2,6 +2,7 @@
 #include <iostream>
 #include "vector3.h"
 #include "physicalObject.h"
+#include "input.h"
 
 using namespace irr;
 using namespace core;
@@ -13,16 +14,17 @@ using namespace gui;
 int main(void){
 
 		std::cout << "HelloWorld" << std::endl ; // Toi même tu sais
+		Input keylogger=Input();
 
     IrrlichtDevice *device = createDevice( // creation device
         EDT_OPENGL,                       // l'API est OpenGL
         dimension2d<u32>(320,260),       // taille de la fenetre 800x600
-        32, false, true, false, 0);		// Profondeur de couleur, fullscreen, stencil buffer, vsync, event (0 sur ce device)
+        32, false, true, false, &keylogger);		// Profondeur de couleur, fullscreen, stencil buffer, vsync, event (0 sur ce device)
 
 		if(!device)																			// Crash si device pas disponible
 			return 1;
 
-		device->setWindowCaption(L"- PoutineOrbit -"); //Nom de la fenetre
+		device->setWindowCaption(L"- PoutineControl -"); //Nom de la fenetre
 
     IVideoDriver* driver =
         device->getVideoDriver();                    // creation driver
@@ -40,20 +42,18 @@ int main(void){
 			return 1;
 		}
 
-		IAnimatedMesh* mesh2 = smgr->getMesh("ball2.stl"); // On charge le mesh
+		IAnimatedMesh* mesh2 = smgr->getMesh("ball.stl"); // On charge le mesh
 		if(!mesh2){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
 		}
 
-		IAnimatedMesh* mesh3 = smgr->getMesh("ball3.stl"); // On charge le mesh
+		IAnimatedMesh* mesh3 = smgr->getMesh("ball.stl"); // On charge le mesh
 		if(!mesh3){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
 		}
-		smgr->getMeshManipulator()->scale(mesh3,vector3df(1,1,1));
-		smgr->getMeshManipulator()->scale(mesh,vector3df(0.75,0.75,0.75));
-		smgr->getMeshManipulator()->scale(mesh2,vector3df(0.25,0.25,0.25));
+		smgr->getMeshManipulator()->scale(mesh,vector3df(0.5,0.5,0.5));
 
 		IAnimatedMeshSceneNode* node = smgr->addAnimatedMeshSceneNode(mesh); // Ajout du mesh à la scene
 		node->addShadowVolumeSceneNode();
@@ -71,14 +71,13 @@ int main(void){
 			node2->setMaterialFlag(EMF_GOURAUD_SHADING, true);
 		}
 
-		IAnimatedMeshSceneNode* node3 = smgr->addAnimatedMeshSceneNode(mesh3); // Ajout du mesh à la scene
+		IAnimatedMeshSceneNode* node3 = smgr->addAnimatedMeshSceneNode(mesh2); // Ajout du mesh à la scene
 	node3->addShadowVolumeSceneNode();
 
 	if(node3){
 		node3->setMaterialFlag(EMF_LIGHTING, true); //On déactive la lumiére dynamic
 		node3->setMaterialFlag(EMF_GOURAUD_SHADING, true);
 	}
-
 
 		ILightSceneNode *light = smgr->addLightSceneNode();
 
@@ -95,28 +94,29 @@ int main(void){
 		u32 start=0, delta=0;
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
-		//Objt.setSpeed(Vector3(0,0,20));							//On lui donne une vitesse initale
-		//Objt.setPos(Vector3(0,0,0));
+		Objt.setSpeed(Vector3(0,0,0));							//On lui donne une vitesse initale
+		Objt.setPos(Vector3(0,0,0));
 
 		physicalObject Objt2 = physicalObject(node2);
+		Objt2.setSpeed(Vector3(0,0,0));
+		Objt2.setPos(Vector3(0,0,100));
 
-		//Objt2.setMass(8000);
+		physicalObject Objt3 = physicalObject(node3);
+		Objt3.setSpeed(Vector3(0,0,0));
+		Objt3.setPos(Vector3(0,0,-100));
 
-	  //physicalObject Objt3 = physicalObject(node3);
-		//Objt3.setSpeed(Vector3(0,0,0));
-		//Objt3.setPos(Vector3(0,0,-100));
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
 
 		Vector3 Gravity = Vector3(0,9,0);
 
-		Objt.setPos(Vector3(180,0,0));
-		Objt.setSpeed(Vector3(0,0,-50));
-		Objt2.setSpeed(Vector3(0,0,25));
-		Objt2.setPos(Vector3(240,0,0));
-		Objt2.setMass(100);
+		//Objt.setPos(Vector3(180,0,0));
+		//Objt.setSpeed(Vector3(0,0,-50));
 
-		Objt.addCollider(30);
-		Objt2.addCollider(10);
+
+
+		Objt.addCollider(20);
+		Objt2.addCollider(20);
+		Objt3.addCollider(20);
 
 
     while (device->run()) {                          // la boucle de rendu
@@ -128,17 +128,37 @@ int main(void){
 				//node->setPosition(vector3df(0,0,0));
 				delta=device->getTimer()->getTime()-start;
 				if(delta>16){												//On maj la physique tout les ~1/60 de secondes
-					std::cout << "Vector Gravity : " ;
+					/*std::cout << "Vector Gravity : " ;
 					Gravity.log();
-					//Objt2.addForce( Gravity2*Objt2.getMass() ); //Gravité \o/ (obj de masse 1)
-					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) );
-					Objt2.addForce( Gravity.rotate_toward( Objt2.getPos(), Objt.getPos() )*1500);// DO NOT TOUCH! IT JUST WORKS
-					Objt2.getSpd().log();
-					/*if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
+					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) ); //Gravité \o/ (obj de masse 1)
+					*/
+
+					if (keylogger.IsKeyDown(irr::KEY_KEY_W)){
+						Objt.addForce(Vector3(50,0,0));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_S)){
+						Objt.addForce(Vector3(-50,0,0));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_A)){
+						Objt.addForce(Vector3(0,0,50));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_D)){
+						Objt.addForce(Vector3(0,0,-50));
+					}
+					if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
 						std::cout << "Collide !" << std::endl;
 						Objt.getCol()->appliColide(*(Objt2.getCol()),1.0);
-					}*/
+					}
+					if(Objt2.getCol()->isCollide(*(Objt3.getCol()))){
+						std::cout << "Collide !" << std::endl;
+						Objt2.getCol()->appliColide(*(Objt3.getCol()),1.0);
+					}
+					if(Objt.getCol()->isCollide(*(Objt3.getCol()))){
+						std::cout << "Collide !" << std::endl;
+						Objt.getCol()->appliColide(*(Objt3.getCol()),1.0);
+					}
 					//Objt.addForce(Vector3(0,0,9.8));
+					Objt3.update(delta/1000.0);
 					Objt2.update(delta/1000.0);
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
