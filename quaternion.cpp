@@ -1,13 +1,11 @@
 #include "quaternion.h"
-
-
-
+#include "matrix.h"
 Matrix Quaternion::toMatrix()
 		{
 			Matrix M = Matrix(3);
 			M.data[0][0]=1-2*(this->v.y*this->v.y)-2*(this->v.z*this->v.z);
 			M.data[0][1]=2*(this->v.x*this->v.y)-2*(this->w*this->v.z);
-			M.data[0][2]=2*(this->v.x*this->v.z)+*(this->v.y*this->w);
+			M.data[0][2]=2*(this->v.x*this->v.z)+2*(this->v.y*this->w);
 
 			M.data[1][0]=2*(this->v.x*this->v.y)+2*(this->w*this->v.z);
 			M.data[1][1]=1-2*(this->v.x*this->v.x)-2*(this->v.z*this->v.z);
@@ -29,7 +27,7 @@ Quaternion Quaternion::operator*(Quaternion q){
 		p.w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
 		p.v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
 		p.v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		p.x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
+		p.v.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
 		return p;
 		}
 
@@ -37,7 +35,7 @@ void Quaternion::operator*=(Quaternion q){
 		this->w = this->w*q.w - this->v.x*q.v.x - this->v.y*q.v.y - this->v.z*q.v.z;
 		this->v.x = this->v.x*q.w + this->w*q.v.x  +this->v.y*q.v.z - this->v.z*q.v.y;
 		this->v.y = this->v.y*q.w + this->w*q.v.y - this->v.x*q.v.z + this->v.z*q.v.x;
-		this->x.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
+		this->v.z = this->w*q.v.z + this->v.x*q.v.y - this->v.y*q.v.x  + this->v.z*q.w;
 
 		}
 
@@ -62,23 +60,23 @@ void Quaternion::operator*=(Quaternion q){
 		}
 
 
-		Vector3 toEulerAngle()
+		Vector3 Quaternion::toEulerAngle()
 		{
 			Vector3 vect = Vector3();
 			// roll (x-axis rotation)
-			double sinr = +2.0 * (this->.w() * this->v.x() + this->v.y() * this->v.z());
-			double cosr = +1.0 - 2.0 * (this->v.x() * this->v.x() + this->v.y() * this->v.y());
+			double sinr = +2.0 * (this->w * this->v.x + this->v.y * this->v.z);
+			double cosr = +1.0 - 2.0 * (this->v.x * this->v.x + this->v.y * this->v.y);
 			vect.x = atan2(sinr, cosr);
 
 			// pitch (y-axis rotation)
-			double sinp = +2.0 * (this->w() * this->v.y() - this->v.z() * this->v.x());
+			double sinp = +2.0 * (this->w * this->v.y - this->v.z * this->v.x);
 			if (fabs(sinp) >= 1)
 				vect.y = copysign(M_PI / 2, sinp); // use 90 degrees if out of range
 			else
 				vect.y = asin(sinp);
 
 			// yaw (z-axis rotation)
-			double siny = +2.0 * (this->w() * this->v.z() + this->v.x() * this->v.y());
-			double cosy = +1.0 - 2.0 * (this->v.y() * this->v.y() + this->v.z() * this->v.z());  
+			double siny = +2.0 * (this->w * this->v.z + this->v.x * this->v.y);
+			double cosy = +1.0 - 2.0 * (this->v.y * this->v.y + this->v.z * this->v.z);
 			vect.z = atan2(siny, cosy);
 		}

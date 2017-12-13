@@ -4,7 +4,7 @@
 #include <cmath>
 #include <irrlicht/irrlicht.h>
 #include "vector3.h"
-#include "matrix.h"
+class Matrix;
 #include <iostream>
 
 typedef float real;
@@ -18,23 +18,23 @@ class Quaternion{
 
 
 
-		Quaternion() : w(0), v.x(0),v.y(0),v.z(0) {}
+		Quaternion()  {w=0; v.x=0;v.y=0;v.z=0;}
 
-		Quaternion(const t, Vector3 p) :w(t),v.x(p.x),v.y(p.y), v.z(p.z) {}
+		Quaternion(const float t, Vector3 p) {w=t;v.x=p.x;v.y=p.y; v.z=p.z;}
 
-		Matrix toMatrix(){};
+		Matrix toMatrix();
 
-		real magnitude(){};
+		real magnitude();
 
-		Quaternion operator*(Quaternion q){};
+		Quaternion operator*(Quaternion q);
 
-		void operator*=(Quaternion q){};
+		void operator*=(Quaternion q);
 
-		real scalarProduct(Quaternion q){};
+		real scalarProduct(Quaternion q);
 
-		Quaternion conjugue(){};
+		Quaternion conjugue();
 
-		real norm(){};
+		real norm();
 
 		Vector3 toEulerAngle();
 
