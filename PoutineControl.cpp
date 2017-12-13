@@ -95,7 +95,7 @@ int main(void){
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
 		Objt.setSpeed(Vector3(0,0,0));							//On lui donne une vitesse initale
-		Objt.setPos(Vector3(0,0,0));
+		Objt.setPos(Vector3(0,0,-100));
 
 		physicalObject Objt2 = physicalObject(node2);
 		Objt2.setSpeed(Vector3(0,0,0));
@@ -103,7 +103,7 @@ int main(void){
 
 		physicalObject Objt3 = physicalObject(node3);
 		Objt3.setSpeed(Vector3(0,0,0));
-		Objt3.setPos(Vector3(0,0,-100));
+		Objt3.setPos(Vector3(0,0,0));
 
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
 
