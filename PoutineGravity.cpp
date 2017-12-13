@@ -22,7 +22,7 @@ int main(void){
 		if(!device)																			// Crash si device pas disponible
 			return 1;
 
-		device->setWindowCaption(L"- PoutinePhysics -"); //Nom de la fenetre
+		device->setWindowCaption(L"- PoutineGravity -"); //Nom de la fenetre
 
     IVideoDriver* driver =
         device->getVideoDriver();                    // creation driver
@@ -31,16 +31,16 @@ int main(void){
 		IGUIEnvironment* guienv =
 		 		device->getGUIEnvironment();								// on prend le gui
 
-		guienv->addStaticText(L"Cette simulation vous est offert par les Poutine au Boivin", rect<s32>(10,10,260,22), true);
+		guienv->addStaticText(L"Cette simulation vous est offert par les Poutines au Boivin", rect<s32>(10,10,260,22), true);
 		// Text, rectangle de placement
 
-		IAnimatedMesh* mesh = smgr->getMesh("skull.stl"); // On charge le mesh
+		IAnimatedMesh* mesh = smgr->getMesh("ball.stl"); // On charge le mesh
 		if(!mesh){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
 		}
 
-		IAnimatedMesh* mesh2 = smgr->getMesh("skull.stl"); // On charge le mesh
+		IAnimatedMesh* mesh2 = smgr->getMesh("ball.stl"); // On charge le mesh
 		if(!mesh2){
 			device->drop();  //On crash tout si le mesh n'est pas chargé
 			return 1;
@@ -79,12 +79,12 @@ int main(void){
 		u32 start=0, delta=0;
 
 		physicalObject Objt = physicalObject(node);	// Init Obj physique
-		Objt.setSpeed(Vector3(0,0,20));							//On lui donne une vitesse initale
+		Objt.setSpeed(Vector3(0,0,50));							//On lui donne une vitesse initale
 		Objt.setPos(Vector3(0,0,0));
 
 		physicalObject Objt2 = physicalObject(node2);
 		Objt2.setSpeed(Vector3(0,0,0));
-		Objt2.setPos(Vector3(0,0,100));
+		Objt2.setPos(Vector3(0,0,200));
 		Objt2.setMass(8000);
 
 		device->getTimer()->setSpeed(1.0f);				//Vitesse du temps virtuel
@@ -96,8 +96,8 @@ int main(void){
 
 
 
-		Objt.addCollider(Vector3(20,20,20));
-		Objt2.addCollider(20);
+		Objt.addCollider(40);
+		Objt2.addCollider(40);
 
 
     while (device->run()) {                          // la boucle de rendu
@@ -109,15 +109,16 @@ int main(void){
 				//node->setPosition(vector3df(0,0,0));
 				delta=device->getTimer()->getTime()-start;
 				if(delta>16){												//On maj la physique tout les ~1/60 de secondes
-					/*std::cout << "Vector Gravity : " ;
+					std::cout << "Vector Gravity : " ;
 					Gravity.log();
-					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) ); //Gravité \o/ (obj de masse 1)
-					*/
+					//Objt2.addForce( Gravity2*Objt2.getMass() ); //Gravité \o/ (obj de masse 1)
+					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) );
+					Objt.getSpd().log();
 					if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
 						std::cout << "Collide !" << std::endl;
 						Objt.getCol()->appliColide(*(Objt2.getCol()),1.0);
 					}
-					Objt.addForce(Vector3(0,0,9.8));
+					//Objt.addForce(Vector3(0,0,9.8));
 					Objt2.update(delta/1000.0);
 					Objt.update(delta/1000.0);				// delta est en ms on passe en s
 					start=device->getTimer()->getTime();
