@@ -3,7 +3,7 @@ LIBS=-lIrrlicht -lGL -lm
 EXE=PoutinePhysics
 
 
-all : clean base.o bouncingball gravity orbit
+all : clean base.o bouncingball gravity orbit control
 
 base.o : vector3.o physicalObject.o collider.o matrix.o quaternion.o input.o
 	ld -r vector3.o collider.o matrix.o quaternion.o  physicalObject.o input.o -o base.o

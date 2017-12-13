@@ -14,11 +14,12 @@ using namespace gui;
 int main(void){
 
 		std::cout << "HelloWorld" << std::endl ; // Toi même tu sais
+		Input keylogger=Input();
 
     IrrlichtDevice *device = createDevice( // creation device
         EDT_OPENGL,                       // l'API est OpenGL
         dimension2d<u32>(320,260),       // taille de la fenetre 800x600
-        32, false, true, false, 0);		// Profondeur de couleur, fullscreen, stencil buffer, vsync, event (0 sur ce device)
+        32, false, true, false, &keylogger);		// Profondeur de couleur, fullscreen, stencil buffer, vsync, event (0 sur ce device)
 
 		if(!device)																			// Crash si device pas disponible
 			return 1;
@@ -131,6 +132,19 @@ int main(void){
 					Gravity.log();
 					Objt.addForce( Gravity.rotate_toward( Objt.getPos(), Vector3(0,0,0)) ); //Gravité \o/ (obj de masse 1)
 					*/
+
+					if (keylogger.IsKeyDown(irr::KEY_KEY_W)){
+						Objt.addForce(Vector3(50,0,0));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_S)){
+						Objt.addForce(Vector3(-50,0,0));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_A)){
+						Objt.addForce(Vector3(0,0,50));
+					}
+					if (keylogger.IsKeyDown(irr::KEY_KEY_D)){
+						Objt.addForce(Vector3(0,0,-50));
+					}
 					if(Objt.getCol()->isCollide(*(Objt2.getCol()))){
 						std::cout << "Collide !" << std::endl;
 						Objt.getCol()->appliColide(*(Objt2.getCol()),1.0);
