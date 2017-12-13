@@ -19,6 +19,8 @@ class physicalObject {
     Vector3 pos;
     Vector3 accel;
     Vector3 spd;
+    Vector3 angularAccel;
+    Vector3 angularSpd;
     Vector3 eulerRot;
     real mass;
     std::list<Vector3> forceQ; //List of force for next update
@@ -48,6 +50,14 @@ class physicalObject {
     void setSpeed(Vector3 vect){spd = vect;}
     void setAccel(Vector3 vect){ accel= vect;}
 
+    Vector3 getAngularAccel(){return angularAccel;}
+    Vector3 getAngularSpd(){return angularSpd;}
+    Vector3 getEulerAngle(){return eulerRot;}
+
+    void setAngularAccel(Vector3 v){angularAccel = v;}
+    void setAngularSpd(Vector3 v){angularSpd = v;}
+    void setEulerRot(Vector3 v){eulerRot = v;}
+
     Vector3 getPos(){return pos;}
     Vector3 getRot(){return eulerRot;}
     Vector3 getAccel(){return pos;}
@@ -66,9 +76,14 @@ class physicalObject {
       void treatForce(real); //Appli all forces in forceQ to the object (update spd)
       Vector3 integrate(Vector3, real); //return integrated vector
       void treatSpd(real);
+
+
+      void treatAngularAccel(real);
+      void treatAngularSpd(real);
+
     public :
 
-    void update(real delta);
+      void update(real delta);
 };
 
 #endif
